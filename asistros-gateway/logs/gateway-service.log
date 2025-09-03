@@ -26,3 +26,24 @@
 2025-09-02 22:30:01 [reactor-http-nio-5] DEBUG c.c.gateway.filter.JwtAuthFilter - Token válido para usuario: testuser (ID: 999)
 2025-09-02 22:30:01 [reactor-http-nio-5] DEBUG c.c.gateway.filter.JwtAuthFilter - Roles: [Administrador]
 2025-09-02 22:30:01 [reactor-http-nio-5] DEBUG c.c.gateway.filter.JwtAuthFilter - Headers agregados al request para microservicios
+2025-09-02 22:30:23 [main] INFO  c.c.gateway.GatewayApplication - Starting GatewayApplication using Java 22.0.1 with PID 12040 (C:\Users\Ema Toppi\Desktop\ASISTROS\asistros-gateway\target\classes started by Ema Toppi in C:\Users\Ema Toppi\Desktop\ASISTROS\asistros-gateway)
+2025-09-02 22:30:23 [main] DEBUG c.c.gateway.GatewayApplication - Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-09-02 22:30:23 [main] INFO  c.c.gateway.GatewayApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-02 22:30:24 [main] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=f4e88316-be4c-3033-992e-8061a4ff9f17
+2025-09-02 22:30:24 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [After]
+2025-09-02 22:30:24 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Before]
+2025-09-02 22:30:24 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Between]
+2025-09-02 22:30:24 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Cookie]
+2025-09-02 22:30:24 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Header]
+2025-09-02 22:30:24 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Host]
+2025-09-02 22:30:24 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Method]
+2025-09-02 22:30:24 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Path]
+2025-09-02 22:30:24 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Query]
+2025-09-02 22:30:24 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [ReadBody]
+2025-09-02 22:30:24 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [RemoteAddr]
+2025-09-02 22:30:24 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2025-09-02 22:30:24 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Weight]
+2025-09-02 22:30:24 [main] INFO  o.s.c.g.r.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2025-09-02 22:30:24 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoint(s) beneath base path '/actuator'
+2025-09-02 22:30:25 [main] INFO  o.s.b.w.e.netty.NettyWebServer - Netty started on port 8081
+2025-09-02 22:30:25 [main] INFO  c.c.gateway.GatewayApplication - Started GatewayApplication in 2.205 seconds (process running for 2.771)
