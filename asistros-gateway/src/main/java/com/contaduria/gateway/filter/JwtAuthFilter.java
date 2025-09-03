@@ -70,7 +70,7 @@ public class JwtAuthFilter implements GatewayFilter {
             String email = jwtUtil.extraerEmail(token);
             List<String> roles = jwtUtil.extraerRoles(token);
             List<String> permisos = jwtUtil.extraerPermisos(token);
-            Integer puedeVerTodosClientes = jwtUtil.extraerPuedeVerTodosClientes(token);
+            Boolean puedeVerTodosClientes = jwtUtil.extraerPuedeVerTodosClientes(token);
 
             logger.debug("Token válido para usuario: {} (ID: {})", nombreUsuario, usuarioId);
             logger.debug("Roles: {}", roles);

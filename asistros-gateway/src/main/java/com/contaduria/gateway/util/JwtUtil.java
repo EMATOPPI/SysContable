@@ -141,13 +141,12 @@ public class JwtUtil {
 
     /**
      * Extrae si el usuario puede ver todos los clientes
-     *
      * @param token Token JWT
      * @return Boolean indicando si puede ver todos los clientes
      */
-    public Integer extraerPuedeVerTodosClientes(String token) {
+    public Boolean extraerPuedeVerTodosClientes(String token) {
         Claims claims = extraerClaims(token);
-        return claims.get("puedeVerTodosClientes", Integer.class);
+        return claims.get("puedeVerTodosClientes", Boolean.class);
     }
 
     /**

@@ -42,7 +42,6 @@ public class SecurityConfig {
                                 "/api/auth/renovar",
                                 "/api/auth/validar",
                                 "/api/auth/health",
-                                "/api/auth/perfil",  // AGREGAR ESTA LÍNEA
                                 "/api/auth/login-debug"  // AGREGADO TEMPORALMENTE
                         ).permitAll()
 
