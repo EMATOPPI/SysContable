@@ -3,7 +3,14 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, user } = useAuth();
+
+  console.log('🛡️ ProtectedRoute - Estado:', { 
+    isAuthenticated, 
+    isLoading, 
+    hasUser: !!user,
+    userName: user?.usuario 
+  });
 
   // Mostrar loading mientras se verifica la autenticación
   if (isLoading) {
@@ -19,9 +26,12 @@ const ProtectedRoute = ({ children }) => {
 
   // Si no está autenticado, redirigir al login
   if (!isAuthenticated) {
+    console.log('❌ Usuario no autenticado, redirigiendo a login...');
     return <Navigate to="/login" replace />;
   }
 
+  console.log('✅ Usuario autenticado, mostrando contenido protegido...');
+  
   // Si está autenticado, mostrar el contenido protegido
   return children;
 };

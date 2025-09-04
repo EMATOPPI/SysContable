@@ -74,7 +74,10 @@ export const AuthProvider = ({ children }) => {
 
       if (savedToken && savedUser) {
         try {
-          // Intentar obtener el perfil actualizado
+          // Parsear el usuario guardado
+          const parsedUser = JSON.parse(savedUser);
+          
+          // Intentar obtener el perfil actualizado para validar el token
           const profileResponse = await authService.getProfile();
           
           if (profileResponse.exito) {
@@ -87,19 +90,36 @@ export const AuthProvider = ({ children }) => {
               }
             });
           } else {
-            // Si el perfil falla, limpiar tokens
+            // Si el perfil falla, usar datos guardados si el token parece válido
+            dispatch({
+              type: 'LOGIN_SUCCESS',
+              payload: {
+                user: parsedUser,
+                accessToken: savedToken,
+                refreshToken: savedRefreshToken
+              }
+            });
+          }
+        } catch (error) {
+          console.error('Error verificando sesión:', error);
+          // Si hay error, intentar con datos locales primero
+          try {
+            const parsedUser = JSON.parse(savedUser);
+            dispatch({
+              type: 'LOGIN_SUCCESS',
+              payload: {
+                user: parsedUser,
+                accessToken: savedToken,
+                refreshToken: savedRefreshToken
+              }
+            });
+          } catch (parseError) {
+            // Si no se puede parsear, limpiar todo
             localStorage.removeItem(TOKEN_CONFIG.ACCESS_TOKEN_KEY);
             localStorage.removeItem(TOKEN_CONFIG.USER_KEY);
             localStorage.removeItem(TOKEN_CONFIG.REFRESH_TOKEN_KEY);
             dispatch({ type: 'LOGOUT' });
           }
-        } catch (error) {
-          console.error('Error verificando sesión:', error);
-          // Si hay error, limpiar todo
-          localStorage.removeItem(TOKEN_CONFIG.ACCESS_TOKEN_KEY);
-          localStorage.removeItem(TOKEN_CONFIG.USER_KEY);
-          localStorage.removeItem(TOKEN_CONFIG.REFRESH_TOKEN_KEY);
-          dispatch({ type: 'LOGOUT' });
         }
       } else {
         dispatch({ type: 'LOGOUT' });
@@ -114,7 +134,9 @@ export const AuthProvider = ({ children }) => {
     dispatch({ type: 'LOADING' });
 
     try {
+      console.log('🔐 Iniciando login...', credentials.usuario);
       const response = await authService.login(credentials);
+      console.log('📡 Respuesta del servidor:', response);
 
       if (response.exito) {
         const { accessToken, refreshToken, usuario } = response.datos;
@@ -123,6 +145,8 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem(TOKEN_CONFIG.ACCESS_TOKEN_KEY, accessToken);
         localStorage.setItem(TOKEN_CONFIG.REFRESH_TOKEN_KEY, refreshToken);
         localStorage.setItem(TOKEN_CONFIG.USER_KEY, JSON.stringify(usuario));
+
+        console.log('✅ Login exitoso, actualizando estado...', usuario);
 
         dispatch({
           type: 'LOGIN_SUCCESS',
@@ -135,6 +159,7 @@ export const AuthProvider = ({ children }) => {
 
         return { success: true };
       } else {
+        console.error('❌ Error en respuesta del servidor:', response.error);
         dispatch({
           type: 'LOGIN_ERROR',
           payload: response.error || 'Error en el login'
@@ -142,6 +167,7 @@ export const AuthProvider = ({ children }) => {
         return { success: false, error: response.error };
       }
     } catch (error) {
+      console.error('❌ Error durante login:', error);
       const errorMessage = error.response?.data?.error || error.message || 'Error de conexión';
       dispatch({
         type: 'LOGIN_ERROR',
@@ -157,8 +183,13 @@ export const AuthProvider = ({ children }) => {
       await authService.logout();
     } catch (error) {
       console.error('Error durante logout:', error);
+    } finally {
+      // Limpiar localStorage
+      localStorage.removeItem(TOKEN_CONFIG.ACCESS_TOKEN_KEY);
+      localStorage.removeItem(TOKEN_CONFIG.REFRESH_TOKEN_KEY);
+      localStorage.removeItem(TOKEN_CONFIG.USER_KEY);
+      dispatch({ type: 'LOGOUT' });
     }
-    dispatch({ type: 'LOGOUT' });
   };
 
   // Actualizar información del usuario
@@ -193,6 +224,15 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated: state.status === APP_STATES.AUTHENTICATED,
     isLoading: state.status === APP_STATES.LOADING
   };
+
+  // Debug logs
+  console.log('🔍 AuthContext Estado:', {
+    status: state.status,
+    isAuthenticated: state.status === APP_STATES.AUTHENTICATED,
+    isLoading: state.status === APP_STATES.LOADING,
+    hasUser: !!state.user,
+    userName: state.user?.usuario
+  });
 
   return (
     <AuthContext.Provider value={value}>
